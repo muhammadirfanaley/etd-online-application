@@ -1,0 +1,36 @@
+.vehicle-registration-form {
+  width: 100%;
+  height: 470px;
+  overflow-y: auto;
+  -webkit-transition: width 2s, height 0.5s; /* For Safari 3.1 to 6.0 */
+  transition: width 2s, height 0.5s;
+  border-top: 1px solid #ddd;
+
+  .md-text-field-container--input {
+    i {
+      display: none;
+    }
+
+    .md-text-field-divider-container {
+      margin-left: 0;
+    }
+
+    .md-text-field-icon {
+      margin-left: 0;
+    }
+
+    .md-floating-label {
+      left: 0 !important;
+    }
+
+    .md-text-field-message-container {
+      padding-left: 0 !important;
+    }
+  }
+
+  .floating-calculate-button {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+  }
+}

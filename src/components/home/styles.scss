@@ -1,0 +1,270 @@
+@import '~react-md/src/scss/react-md';
+/* stylelint-disable */
+$md-primary-color: $md-teal-500;
+$md-secondary-color: $md-teal-500;
+
+@include react-md-everything;
+
+// All the components will now be themed using teal and lime.
+// Now we want a dark theme using the same colors
+
+@include react-md-theme-everything(
+  $md-primary-color,
+  $md-secondary-color,
+  false,
+  'dark-theme'
+);
+
+// If you add the `dark-theme` class name to your `body` or `html` tags, your app will now
+// be updated with the minimal amount of styles to theme to the dark theme.
+
+$break-small: 320px;
+$break-large: 1024px;
+
+@mixin respond-to($media) {
+  @if $media == handhelds {
+    @media only screen and (max-width: $break-small) {
+      @content;
+    }
+  }
+
+  @else if $media == medium-screens {
+    @media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) {
+      @content;
+    }
+  }
+
+  @else if $media == wide-screens {
+    @media only screen and (min-width: $break-large) {
+      @content;
+    }
+  }
+}
+/* stylelint-enable */
+
+.vehicle-registration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100vh);
+  background: #fff;
+
+  @include respond-to(handhelds) {
+    width: 100%;
+  }
+
+  @include respond-to(medium-screens) {
+    width: 100%;
+  }
+
+  @include respond-to(wide-screens) {
+    width: 100%;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 60px;
+    max-height: 60px;
+    padding: 0 30px;
+    background: $md-primary-color;
+
+    .top-bar-logo {
+      p {
+        margin: 0;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 300;
+        text-transform: uppercase;
+      }
+    }
+
+    .top-bar-actions {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        padding: 0 5px;
+
+        label {
+          color: #fff;
+          font-size: 11px;
+        }
+
+        input {
+          min-width: 200px;
+          height: 28px;
+          padding: 5px;
+          border: 1px solid #fff;
+          border-radius: 2px;
+          font-size: 12px;
+        }
+      }
+
+      button {
+        height: 30px;
+        margin: auto;
+        border: 1px solid #fff;
+        border-radius: 2px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 300;
+      }
+    }
+  }
+
+  h2 {
+    color: rgba(0, 0, 0, 0.54);
+    font-weight: 300;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    margin-top: 1px;
+    background: #ddd;
+  }
+
+  .stepper-actions {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    min-height: 50px;
+    // border-top: 1px solid #ddd;
+  }
+
+  .md-text {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .help-text {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .form-view {
+    width: 70%;
+    // overflow-y: auto;
+    border-radius: 5px;
+  }
+
+  .step-3 {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    h2 {
+      margin: 15px 0;
+      letter-spacing: 5px;
+    }
+
+    .section {
+      padding: 10px;
+      padding-bottom: 30px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+
+      .section-heading {
+        position: absolute;
+        margin: 0;
+        margin-top: -27px;
+        margin-left: 16px;
+        padding: 5px 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #fff;
+        color: rgba(0, 0, 0, 0.54);
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .step-2 {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    h2 {
+      margin: 15px 0;
+      letter-spacing: 5px;
+    }
+  }
+
+  .step-1 {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    h2 {
+      letter-spacing: 5px;
+    }
+
+    .switch-selection {
+      display: flex;
+
+      .switch-pill {
+        display: flex;
+        justify-content: center;
+        width: 230px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        color: rgba(0, 0, 0, 0.54);
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+
+        &:hover {
+          background: #dddddd1c;
+        }
+      }
+
+      .selected {
+        background: $md-primary-color;
+        color: #fff;
+
+        &:hover {
+          background: $md-primary-color;
+        }
+      }
+    }
+  }
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 0;
+  background: rgba(113, 113, 113, 0.76);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(113, 113, 113, 0.76);
+}

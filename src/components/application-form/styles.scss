@@ -1,0 +1,116 @@
+.profile-application {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+
+  .profile-summary-heading {
+    width: 100%;
+    margin: 15px 0;
+    letter-spacing: 5px;
+  }
+
+  .flexbox-row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .label-control-group {
+    display: flex;
+    flex: 1;
+    align-items: baseline;
+    margin: 0 10px;
+
+    .label-control {
+      display: flex;
+      align-items: baseline;
+      width: 100px;
+      color: rgba(0, 0, 0, 0.54);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .md-picker-container {
+      width: 100%;
+    }
+
+    .value-control {
+      flex: 1;
+    }
+  }
+
+  .md-expansion-panel-list {
+    flex: 1;
+
+    li {
+      box-shadow: none;
+
+      .md-panel-header {
+        height: 40px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        background: #dddddd30;
+      }
+
+      .md-panel-header--expanded {
+        height: 40px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        background: #dddddd30;
+      }
+
+      .tab-heading {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        color: rgba(0, 0, 0, 0.54);
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+
+        span {
+          font-size: 10px;
+          font-style: italic;
+          font-weight: 600;
+          letter-spacing: 1.5px;
+        }
+      }
+    }
+  }
+
+  .address-box {
+    display: flex;
+    position: relative;
+    flex: 1;
+    flex-direction: column;
+    margin: 0 5px;
+    padding: 10px;
+    padding-bottom: 20px;
+    border: 1px solid #eee;
+
+    .address-box-heading {
+      position: absolute;
+      top: -18px;
+      margin: 0;
+      padding: 5px 20px;
+      border: 1px solid #eee;
+      background: #fff;
+      color: rgba(0, 0, 0, 0.8);
+      // color: #009688;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  input {
+    color: #009688 !important;
+  }
+
+  .md-icon-text {
+    color: #009688 !important;
+  }
+
+  textarea {
+    color: #009688 !important;
+  }
+}
