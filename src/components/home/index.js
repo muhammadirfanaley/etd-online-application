@@ -107,18 +107,18 @@ class Home extends Component {
       url: '/etd-online-be/',
       data: currentSession.id
         ? {
-            meta: {
-              computerNumber: currentSession.id,
-            },
-            buyer: vehicleApplicationInfo,
-            purchaser: vehicleApplicationInfo,
-            vehicle: vehicleRegistrationInfo,
-          }
-        : {
-            buyer: vehicleApplicationInfo,
-            purchaser: vehicleApplicationInfo,
-            vehicle: vehicleRegistrationInfo,
+          meta: {
+            computerNumber: currentSession.id,
           },
+          buyer: vehicleApplicationInfo,
+          purchaser: vehicleApplicationInfo,
+          vehicle: vehicleRegistrationInfo,
+        }
+        : {
+          buyer: vehicleApplicationInfo,
+          purchaser: vehicleApplicationInfo,
+          vehicle: vehicleRegistrationInfo,
+        },
     })
       .then(response => {
         const { data = [] } = response;
@@ -295,7 +295,7 @@ class Home extends Component {
       },
     });
   };
-  render() {
+  render () {
     const {
       step,
       vehicleApplicationInfo,
@@ -469,6 +469,7 @@ class Home extends Component {
                   </SVGIcon>
                 }
                 onNextClick={step => {
+                  window.scrollTo(1, 1);
                   this.validate();
                 }}
                 disabled={vehicleApplicationInfo.ownerType === ''}

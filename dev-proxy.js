@@ -1,9 +1,9 @@
-var proxyConfig = {
+const proxyConfig = {
   '/etd-online-be': {
-    target: 'http://localhost:8080',
-  //  pathRewrite: {
-   //   '^/etd-online-be': '/excise',
-   // },
+    target: 'http://203.99.188.71:8080',
+    // pathRewrite: {
+    //  '^/etd-online-be': '/excise',
+    // },
   },
 }
 
@@ -27,4 +27,4 @@ var proxyConfig = {
 //   },
 // }
 
-module.exports = proxyConfig;
+module.exports = proxyConfig

@@ -67,4 +67,34 @@ INSERT INTO mvrs_online_appiontment
 select id , to_char(start_time,'dd/mm/yyyy hh:mi am' ) as time_   from mvrs_online_appiontment
 where trunc(start_time) > trunc(sysdate )
 and id not in (select nvl(online_appriontment_id,0) from veh_App )
-order by start_time*/
+order by start_time
+*/
+
+
+--===================================
+grant select, insert, update ,delete  on MVRS_ONLINE_APPIONTMENT to mvrs_access_role ;
+
+
+CREATE GLOBAL TEMPORARY TABLE MVRS_ONLINE_APPIONTMENT_TEMP (
+  id           NUMBER,
+  window       VARCHAR2(50),
+  start_time   date ,
+  duration     number 
+)
+ON COMMIT DELETE ROWS;
+
+grant select , insert ,update, delete on MVRS_ONLINE_APPIONTMENT_TEMP to mvrs_access_role ;
+
+
+CREATE SEQUENCE ETDWEB.SEQ_ONLINE_APPIONTMENT_TEMP_ID
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  NOCACHE
+  NOORDER;
+
+grant select on SEQ_ONLINE_APPIONTMENT_TEMP_ID to mvrs_access_role ;
+
+INSERT INTO MVRTD_FORMS VALUES
+(64.5   , 'ADMINISTRATION',    55.5 ,   'ONLINE APPIONTMENT SLOTS'  ,  'gen_time_slots.fmx' ) ;

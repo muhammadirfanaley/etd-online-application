@@ -29,7 +29,7 @@ class ApplicationForm extends Component {
     const { onInfoChange } = this.props;
     onInfoChange && onInfoChange({ id, value });
   };
-  render() {
+  render () {
     const {
       vehicleApplicationInfo,
       vehicleRegistrationInfo,
@@ -58,11 +58,18 @@ class ApplicationForm extends Component {
             <p
               style={{ ...infoMessageStyle, fontSize: '36px' }}
             >{`${currentSession.id}`}</p>
-            <p
-              style={{ ...infoMessageStyle, flex: '1' }}
-            >{`Your apointment time is ${currentSession.ap_time} at counter ${currentSession.window}`}</p>
+            if (Boolean(${currentSession.ap_time} === null ))
+            {
+              <p style={{ ...infoMessageStyle, fontSize: '16px' }}>
+                {`Your apointment time is ${currentSession.ap_time} at ${currentSession.window}`}</p>
+            }
             <p style={{ ...infoMessageStyle, flex: '1' }}>
-              {`Please visit E.T.D Islamabad Office along with original documents.`}
+              {`Please visit E.T.D Islamabad Office along with original documents.`}{' '}
+              <br></br>
+              {`Vehicle's registration is subject to:`} <br></br>
+              {`1:- Owner's biometric verification from NADRA.`} <br></br>
+              {`2:- Vehicle's physical inspection.`} <br></br>
+              {`3:- Owner's proof of residence in Islamabad Capital TERRITORY.`}
             </p>
           </Fragment>
         )}
@@ -227,7 +234,7 @@ class ApplicationForm extends Component {
                       vehicleRegistrationInfo.vehicleFirstTransfer === 'YES'
                     }
                   />
-                  TRANSFER APPLICABLE <span>{`(Purchaser Information)`}</span>
+                  TRANSFER APPLICABLE <span>{`(Purchaser Information/ person or company whose name vehicle invoice/ bill entry is issued)`}</span>
                 </p>
               }
               footer={null}
@@ -531,14 +538,14 @@ const personalInfoConfig = [
     },
     { id: 'ntn', label: 'NTN :' },
   ],
-  [{ id: 'cnic', label: 'CNIC :' }, { id: 'passport', label: 'PASSPORT :' }],
+  [{ id: 'cnic', label: 'CNIC :', helpText: 'i.e: 3740616435939' }, { id: 'passport', label: 'PASSPORT :' }],
   [{ id: 'ownerName', label: 'NAME :' }],
   [{ id: 'fatherHusbandName', label: 'F/H/W/O NAME :' }],
   [
     {
       id: 'contactNumber',
       label: 'MOBILE NO. :',
-      helpText: 'i.e: 03335854784',
+      helpText: 'i.e: 923335854784',
     },
   ],
   [
@@ -567,8 +574,8 @@ const organizationInfoConfig = [
   [
     {
       id: 'contactNumber',
-      label: 'OFFICE/MOBILE NO. :',
-      helpText: 'i.e: 03335854784',
+      label: 'MOBILE NO. :',
+      helpText: 'i.e: 923335854784',
     },
   ],
   [
@@ -594,7 +601,7 @@ const purchaserInfoConfig = [
     { id: 'ntnPurchaser', label: 'NTN :' },
   ],
   [
-    { id: 'cnicPurchaser', label: 'CNIC :' },
+    { id: 'cnicPurchaser', label: 'CNIC :', helpText: 'i.e: 3740616435939' },
     { id: 'passportPurchaser', label: 'PASSPORT :' },
   ],
   [{ id: 'ownerNamePurchaser', label: 'NAME :' }],
