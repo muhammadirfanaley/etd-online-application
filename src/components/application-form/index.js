@@ -107,7 +107,7 @@ class ApplicationForm extends Component {
                 onClick={() => reserveSlot(selectedSlot)}
                 disabled={!selectedSlot}
               >
-                Apply
+                Change Appiontment Time
               </Button>
               )}
             </div>
