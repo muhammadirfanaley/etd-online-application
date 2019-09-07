@@ -6,6 +6,7 @@ import {
   SelectField,
   SelectionControl,
   DatePicker,
+  Button,
 } from 'react-md';
 import PropTypes from 'prop-types';
 
@@ -21,6 +22,9 @@ import {
 import './styles.scss';
 
 class ApplicationForm extends Component {
+  state = {
+    selectedSlot: null,
+  };
   handleOnVehicleChange = ({ id, value }) => {
     const { onVehicleChange } = this.props;
     onVehicleChange && onVehicleChange({ id, value });
@@ -34,7 +38,11 @@ class ApplicationForm extends Component {
       vehicleApplicationInfo,
       vehicleRegistrationInfo,
       currentSession,
+      timeSlots,
+      reserveSlot,
     } = this.props;
+    const { selectedSlot } = this.state;
+
     const showIndividualDetails =
       vehicleApplicationInfo.ownerType === 'INDIVIDUAL';
     const infoMessageStyle = {
@@ -58,11 +66,47 @@ class ApplicationForm extends Component {
             <p
               style={{ ...infoMessageStyle, fontSize: '36px' }}
             >{`${currentSession.id}`}</p>
-            if (Boolean(${currentSession.ap_time} === null ))
-            {
+            {currentSession.ap_time && currentSession.window && (
               <p style={{ ...infoMessageStyle, fontSize: '16px' }}>
-                {`Your apointment time is ${currentSession.ap_time} at ${currentSession.window}`}</p>
-            }
+                {`Your apointment time is ${currentSession.ap_time} at ${currentSession.window}`}
+              </p>
+            )}
+            <div
+              style={{
+                ...infoMessageStyle,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <SelectField
+                id="select-field-controlled22"
+                label="Available Time Slots"
+                required
+                value={selectedSlot}
+                menuItems={timeSlots}
+                onChange={selectedSlot => this.setState({ selectedSlot })}
+                itemLabel="time_"
+                itemValue="id"
+                className="md-cell md-cell--4-tablet md-cell--6"
+                helpOnFocus
+                helpText="Try selecting a value and then selecting the first item in the list."
+                errorText={
+                  <span>
+                    A <em>real</em> value is required for this field
+                  </span>
+                }
+              />
+              <Button
+                flat
+                primary
+                swapTheming
+                onClick={() => reserveSlot(selectedSlot)}
+                disabled={!selectedSlot}
+              >
+                Apply
+              </Button>
+            </div>
             <p style={{ ...infoMessageStyle, flex: '1' }}>
               {`Please visit E.T.D Islamabad Office along with original documents.`}{' '}
               <br></br>
@@ -234,7 +278,8 @@ class ApplicationForm extends Component {
                       vehicleRegistrationInfo.vehicleFirstTransfer === 'YES'
                     }
                   />
-                  TRANSFER APPLICABLE <span>{`(Purchaser Information/ person or company whose name vehicle invoice/ bill entry is issued)`}</span>
+                  TRANSFER APPLICABLE{' '}
+                  <span>{`(Purchaser Information/ person or company whose name vehicle invoice/ bill entry is issued)`}</span>
                 </p>
               }
               footer={null}
@@ -432,6 +477,8 @@ ApplicationForm.propTypes = {
   vehicleApplicationInfo: PropTypes.object,
   vehicleRegistrationInfo: PropTypes.object,
   currentSession: PropTypes.object,
+  timeSlots: PropTypes.arrayOf(PropTypes.object),
+  reserveSlot: PropTypes.func,
 };
 
 const LabelControlGroup = props => {
@@ -538,7 +585,10 @@ const personalInfoConfig = [
     },
     { id: 'ntn', label: 'NTN :' },
   ],
-  [{ id: 'cnic', label: 'CNIC :', helpText: 'i.e: 3740616435939' }, { id: 'passport', label: 'PASSPORT :' }],
+  [
+    { id: 'cnic', label: 'CNIC :', helpText: 'i.e: 3740616435939' },
+    { id: 'passport', label: 'PASSPORT :' },
+  ],
   [{ id: 'ownerName', label: 'NAME :' }],
   [{ id: 'fatherHusbandName', label: 'F/H/W/O NAME :' }],
   [
@@ -553,6 +603,11 @@ const personalInfoConfig = [
       id: 'otherContactNumber',
       label: 'OTHER PHONE :',
       helpText: 'i.e: 0518854974',
+      validate: input => {
+        console.log('validated', input);
+
+        return true;
+      },
     },
   ],
 ];

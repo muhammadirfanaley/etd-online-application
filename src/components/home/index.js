@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, SVGIcon } from 'react-md';
+import { Button, SVGIcon, CircularProgress } from 'react-md';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -16,6 +16,8 @@ import './styles.scss';
 
 class Home extends Component {
   state = {
+    timeSlots: [],
+    fetching: false,
     vehicleApplicationInfo: {
       ownerType: '',
     },
@@ -32,6 +34,60 @@ class Home extends Component {
       chasisNumber: '',
     },
   };
+  /** GET AVAILABLE TIME SLOTS */
+
+  getTimeSlots = async () => {
+    this.setState({ fetching: true });
+    try {
+      this.setState({ fetching: true });
+      const { data } = await axios('etd-online-be/getTimeSlots.php');
+      this.setState({ timeSlots: data.map(ts => resolveCase(ts)) || [] });
+    } catch (error) {
+      alert(error);
+    } finally {
+      this.setState({ fetching: false });
+    }
+  };
+
+  /**
+   *  RESERVE SLOT
+   *
+   */
+
+  reserveSlot = async slot => {
+    if (!slot) {
+      alert('No Slot Selected');
+      return;
+    }
+    const { currentSession } = this.state;
+
+    if (!currentSession.id) {
+      alert('Current Session expired');
+      return;
+    }
+
+    const payload = {
+      computerId: currentSession.id,
+      chasis: currentSession.veh_chasis_no,
+      session_id: currentSession.session_id,
+      timeSlot: Number(slot),
+    };
+
+    this.setState({ fetching: true });
+    try {
+      this.setState({ fetching: true });
+      await axios('etd-online-be/updateTimeSlot.php', {
+        method: 'post',
+        data: payload,
+      });
+      alert('Slot Reserved Successfully');
+    } catch (error) {
+      alert(error);
+    } finally {
+      this.setState({ fetching: false });
+    }
+  };
+
   handleError = ({ id, value = '' }) => {
     const { errors } = this.state;
     this.setState({
@@ -42,6 +98,7 @@ class Home extends Component {
     });
   };
   getApplicationById = ({ context, computerId, chasisNumber }) => {
+    this.setState({ fetching: true });
     axios({
       method: 'post',
       url: '/etd-online-be/get.php',
@@ -74,7 +131,7 @@ class Home extends Component {
             ...tempState,
             currentSession: resolveCase(dataInstance),
           });
-          alert('Application loaded successfully.');
+          console.log('Application loaded successfully.');
         } else {
           alert('Please enter valid Application Computer ID and Chasis No.');
           context.setState({
@@ -91,10 +148,12 @@ class Home extends Component {
             },
           });
         }
+        this.getTimeSlots();
       })
       .catch(err => {
         alert(err);
-      });
+      })
+      .finally(() => this.setState({ fetching: false }));
   };
   handleSubmitAXIOS = context => {
     const {
@@ -102,6 +161,9 @@ class Home extends Component {
       vehicleApplicationInfo,
       currentSession,
     } = context.state;
+
+    this.setState({ fetching: true });
+
     axios({
       method: 'post',
       url: '/etd-online-be/',
@@ -127,12 +189,14 @@ class Home extends Component {
             currentSession: resolveCase(data[0]),
           });
           alert('Application saved successfully');
+          this.getTimeSlots();
         }
       })
       .catch(error => {
         console.log({ error });
         alert('Error while trying to save application. Please Try Again!');
-      });
+      })
+      .finally(() => this.setState({ fetching: false }));
   };
   validate = () => {
     const { vehicleRegistrationInfo } = this.state;
@@ -301,6 +365,7 @@ class Home extends Component {
       vehicleApplicationInfo,
       vehicleRegistrationInfo,
       search,
+      fetching,
     } = this.state;
     return (
       <div className="vehicle-registration">
@@ -309,6 +374,7 @@ class Home extends Component {
             {/* <p>Online Application Filling System</p> */}
             <p>New / Imported Vehicle Registration [Trial Version]</p>
           </div>
+
           <div className="top-bar-actions">
             <div className="control-group">
               <label>Application Computer ID</label>
@@ -379,6 +445,11 @@ class Home extends Component {
           New / Imported Vehicle Registration
         </h2>
         <div className="divider" />
+        {fetching && (
+          <div>
+            <CircularProgress>Loading...</CircularProgress>
+          </div>
+        )}
         {step === 1 && (
           <Fragment>
             <Step1
@@ -452,6 +523,7 @@ class Home extends Component {
           <Fragment>
             <ApplicationForm
               {...this.state}
+              reserveSlot={this.reserveSlot}
               onVehicleChange={({ id, value }) => {
                 this.handleOnChange('vehicleRegistrationInfo', { id, value });
               }}

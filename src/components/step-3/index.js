@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { TextField, SelectField, SelectionControl } from 'react-md'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { TextField, SelectField, SelectionControl } from 'react-md';
 
-import { districts } from 'libs/consts'
+import { districts } from 'libs/consts';
 
 class Step3 extends Component {
   handleOnChange = ({ id, value }) => {
-    const { onChange } = this.props
-    onChange && onChange({ id, value })
-  }
+    const { onChange } = this.props;
+    onChange && onChange({ id, value });
+  };
   handleOnCheckChange = ({ id, value }) => {
-    const { onCheckChange } = this.props
-    onCheckChange && onCheckChange({ id, value })
-  }
+    const { onCheckChange } = this.props;
+    onCheckChange && onCheckChange({ id, value });
+  };
   render () {
-    const { vehicleApplicationInfo } = this.props
+    const { vehicleApplicationInfo } = this.props;
     const showIndividualDetails =
-      vehicleApplicationInfo.ownerType === 'INDIVIDUAL'
+      vehicleApplicationInfo.ownerType === 'INDIVIDUAL';
     return (
       <div id="step-3" className="step-3">
         <h2>{vehicleApplicationInfo.ownerType} ADDRESS INFORMATION</h2>
@@ -29,7 +29,7 @@ class Step3 extends Component {
               className="md-cell md-cell--12-desktop  md-cell--8-tablet  md-cell--4-phone"
               value={vehicleApplicationInfo.presentAddress || ''}
               onChange={value => {
-                this.handleOnChange({ id: 'presentAddress', value })
+                this.handleOnChange({ id: 'presentAddress', value });
               }}
             />
             <TextField
@@ -38,7 +38,7 @@ class Step3 extends Component {
               className="md-cell md-cell--12-desktop  md-cell--8-tablet  md-cell--4-phone"
               value={vehicleApplicationInfo.presentAddressCity || ''}
               onChange={value => {
-                this.handleOnChange({ id: 'presentAddressCity', value })
+                this.handleOnChange({ id: 'presentAddressCity', value });
               }}
             />
             <SelectField
@@ -46,7 +46,7 @@ class Step3 extends Component {
               label="District"
               value={vehicleApplicationInfo.presentAddressDistrict || ''}
               onChange={value => {
-                this.handleOnChange({ id: 'presentAddressDistrict', value })
+                this.handleOnChange({ id: 'presentAddressDistrict', value });
               }}
               itemValue="value"
               menuItems={districts}
@@ -62,7 +62,7 @@ class Step3 extends Component {
               className="md-cell md-cell--12-desktop  md-cell--8-tablet  md-cell--4-phone"
               value={vehicleApplicationInfo.permanentAddress || ''}
               onChange={value => {
-                this.handleOnChange({ id: 'permanentAddress', value })
+                this.handleOnChange({ id: 'permanentAddress', value });
               }}
             />
             <TextField
@@ -71,7 +71,7 @@ class Step3 extends Component {
               className="md-cell md-cell--12-desktop  md-cell--8-tablet  md-cell--4-phone"
               value={vehicleApplicationInfo.permanentAddressCity || ''}
               onChange={value => {
-                this.handleOnChange({ id: 'permanentAddressCity', value })
+                this.handleOnChange({ id: 'permanentAddressCity', value });
               }}
             />
             <SelectField
@@ -79,7 +79,7 @@ class Step3 extends Component {
               label="District"
               value={vehicleApplicationInfo.permanentAddressDistrict || ''}
               onChange={value => {
-                this.handleOnChange({ id: 'permanentAddressDistrict', value })
+                this.handleOnChange({ id: 'permanentAddressDistrict', value });
               }}
               itemValue="value"
               menuItems={districts}
@@ -97,7 +97,7 @@ class Step3 extends Component {
               className="md-cell md-cell--12-desktop  md-cell--8-tablet  md-cell--4-phone"
               value={vehicleApplicationInfo.contactNumber || ''}
               onChange={value => {
-                this.handleOnChange({ id: 'contactNumber', value })
+                this.handleOnChange({ id: 'contactNumber', value });
               }}
             />
             {showIndividualDetails && (
@@ -107,7 +107,7 @@ class Step3 extends Component {
                 className={`md-cell md-cell--12-desktop  md-cell--8-tablet  md-cell--4-phone`}
                 value={vehicleApplicationInfo.email || ''}
                 onChange={value => {
-                  this.handleOnChange({ id: 'email', value })
+                  this.handleOnChange({ id: 'email', value });
                 }}
               />
             )}
@@ -119,7 +119,7 @@ class Step3 extends Component {
                 className={`md-cell md-cell--6-desktop  md-cell--4-tablet  md-cell--4-phone`}
                 value={vehicleApplicationInfo.email || ''}
                 onChange={value => {
-                  this.handleOnChange({ id: 'email', value })
+                  this.handleOnChange({ id: 'email', value });
                 }}
               />
             )}
@@ -131,7 +131,7 @@ class Step3 extends Component {
                 className="md-cell md-cell--6-desktop  md-cell--4-tablet  md-cell--4-phone"
                 value={vehicleApplicationInfo.postalCode || ''}
                 onChange={value => {
-                  this.handleOnChange({ id: 'postalCode', value })
+                  this.handleOnChange({ id: 'postalCode', value });
                 }}
               />
             )}
@@ -143,7 +143,7 @@ class Step3 extends Component {
                 className="md-cell md-cell--12-desktop  md-cell--8-tablet  md-cell--4-phone"
                 value={vehicleApplicationInfo.oldContactNumber || ''}
                 onChange={value => {
-                  this.handleOnChange({ id: 'oldContactNumber', value })
+                  this.handleOnChange({ id: 'oldContactNumber', value });
                 }}
               />
             )}
@@ -158,7 +158,7 @@ class Step3 extends Component {
               className="md-cell md-cell--12-desktop  md-cell--8-tablet  md-cell--4-phone"
               value={vehicleApplicationInfo.otherContactNumber || ''}
               onChange={value => {
-                this.handleOnChange({ id: 'otherContactNumber', value })
+                this.handleOnChange({ id: 'otherContactNumber', value });
               }}
             />
             {showIndividualDetails && (
@@ -168,7 +168,7 @@ class Step3 extends Component {
                 className="md-cell md-cell--12-desktop  md-cell--8-tablet  md-cell--4-phone"
                 value={vehicleApplicationInfo.postalCode || ''}
                 onChange={value => {
-                  this.handleOnChange({ id: 'postalCode', value })
+                  this.handleOnChange({ id: 'postalCode', value });
                 }}
               />
             )}
@@ -180,7 +180,7 @@ class Step3 extends Component {
               className="md-cell md-cell--10-desktop md-cell--6-tablet  md-cell--4-phone"
               value={vehicleApplicationInfo.hpaParty || ''}
               onChange={value => {
-                this.handleOnChange({ id: 'hpaParty', value })
+                this.handleOnChange({ id: 'hpaParty', value });
               }}
             />
 
@@ -200,7 +200,7 @@ class Step3 extends Component {
                 value="hpa"
                 checked={vehicleApplicationInfo.hpa}
                 onChange={checked => {
-                  this.handleOnCheckChange({ id: 'hpa', value: checked })
+                  this.handleOnCheckChange({ id: 'hpa', value: checked });
                 }}
               />
             </div>
@@ -210,14 +210,14 @@ class Step3 extends Component {
           Please fill all the valid information to continue...
         </p>
       </div>
-    )
+    );
   }
 }
 
-export default Step3
+export default Step3;
 
 Step3.propTypes = {
   onChange: PropTypes.func,
   onCheckChange: PropTypes.func,
   vehicleApplicationInfo: PropTypes.object,
-}
+};

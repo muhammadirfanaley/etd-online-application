@@ -17,6 +17,7 @@ export const dictionary = {
     'id',
     'apTime',
     'window',
+    'time',
   ],
   vehicleRegistrationInfo: [
     'cnicPurchaser',
@@ -88,6 +89,7 @@ export const mapping = {
   id: 'id',
   ap_time: 'apTime',
   window: 'window',
+  time: 'time',
 };
 
 /**

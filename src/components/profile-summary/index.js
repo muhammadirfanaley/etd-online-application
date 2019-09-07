@@ -1,26 +1,26 @@
-import React, { Component, Fragment } from 'react'
-import { ExpansionList, ExpansionPanel, Button, SVGIcon } from 'react-md'
-import PropTypes from 'prop-types'
+import React, { Component, Fragment } from 'react';
+import { ExpansionList, ExpansionPanel, Button, SVGIcon } from 'react-md';
+import PropTypes from 'prop-types';
 
-import './styles.scss'
+import './styles.scss';
 
 class ProfileSummary extends Component {
   handleOnChange = ({ id, value }) => {
-    const { onVehicleChange } = this.props
-    onVehicleChange && onVehicleChange({ id, value })
-  }
+    const { onVehicleChange } = this.props;
+    onVehicleChange && onVehicleChange({ id, value });
+  };
   componentDidMount () {
-    const { vehicleApplicationInfo } = this.props
+    const { vehicleApplicationInfo } = this.props;
     if (vehicleApplicationInfo.hpa) {
       this.handleOnChange({
         id: 'vehicleHirePurchaseAgreement',
         value: 'YES',
-      })
+      });
     } else {
       this.handleOnChange({
         id: 'vehicleHirePurchaseAgreement',
         value: 'NO',
-      })
+      });
     }
   }
   render () {
@@ -29,9 +29,9 @@ class ProfileSummary extends Component {
       vehicleApplicationInfo,
       vehicleRegistrationInfo,
       currentSession,
-    } = this.props
+    } = this.props;
     const showIndividualDetails =
-      vehicleApplicationInfo.ownerType === 'INDIVIDUAL'
+      vehicleApplicationInfo.ownerType === 'INDIVIDUAL';
     const infoMessageStyle = {
       color: 'rgba(0,0,0,0.54 )',
       fontSize: '12px',
@@ -39,7 +39,7 @@ class ProfileSummary extends Component {
       textAlign: 'center',
       textTransform: 'uppercase',
       transition: 'width 2s, height 0.5s',
-    }
+    };
     return (
       <div className="profile-summary">
         {/* <h2 className="profile-summary-heading">
@@ -50,9 +50,9 @@ class ProfileSummary extends Component {
             <p style={{ ...infoMessageStyle, borderTop: '1px solid #ddd' }}>
               {`Your application's Computer Number is:`}
             </p>
-            <p style={{ ...infoMessageStyle, fontSize: '36px' }}>{`${
-              currentSession.id
-            }`}</p>
+            <p
+              style={{ ...infoMessageStyle, fontSize: '36px' }}
+            >{`${currentSession.id}`}</p>
             <p style={{ ...infoMessageStyle, flex: '1' }}>
               {`Please visit E.T.D Islamabad Office along with original documents.`}
             </p>
@@ -99,7 +99,7 @@ class ProfileSummary extends Component {
                     icon
                     primary
                     onClick={() => {
-                      onEdit(2)
+                      onEdit(2);
                     }}
                   >
                     edit
@@ -174,7 +174,7 @@ class ProfileSummary extends Component {
                     icon
                     primary
                     onClick={() => {
-                      onEdit(3)
+                      onEdit(3);
                     }}
                   >
                     edit
@@ -251,7 +251,7 @@ class ProfileSummary extends Component {
                     icon
                     primary
                     onClick={() => {
-                      onEdit(3)
+                      onEdit(3);
                     }}
                   >
                     edit
@@ -336,7 +336,7 @@ class ProfileSummary extends Component {
                     icon
                     primary
                     onClick={() => {
-                      onEdit(5)
+                      onEdit(5);
                     }}
                   >
                     edit
@@ -352,7 +352,7 @@ class ProfileSummary extends Component {
                     label={`${info.label}:`}
                     value={vehicleRegistrationInfo[info.id]}
                   />
-                )
+                );
               })}
               {vehicleInfoConfigWithYesNo.map(info => {
                 return (
@@ -375,17 +375,17 @@ class ProfileSummary extends Component {
                       </SVGIcon>
                     }
                   />
-                )
+                );
               })}
             </ExpansionPanel>
           </ExpansionList>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default ProfileSummary
+export default ProfileSummary;
 
 ProfileSummary.propTypes = {
   onEdit: PropTypes.func,
@@ -393,7 +393,7 @@ ProfileSummary.propTypes = {
   vehicleApplicationInfo: PropTypes.object,
   vehicleRegistrationInfo: PropTypes.object,
   currentSession: PropTypes.object,
-}
+};
 
 const LabelControlGroup = props => {
   return (
@@ -401,13 +401,13 @@ const LabelControlGroup = props => {
       <div className="label-control">{props.label || 'Label'}</div>
       <div className="value-control">{props.value || '--'}</div>
     </div>
-  )
-}
+  );
+};
 
 LabelControlGroup.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
-}
+};
 
 const vehicleInfoConfig = [
   { id: 'vehicleValue', label: 'Vehicle Value (Rs.)' },
@@ -422,10 +422,10 @@ const vehicleInfoConfig = [
   { id: 'vehiclePurchaseDate', label: 'Purchase Date (MM/DD/YYYY)' },
   { id: 'vehiclePurchaseType', label: 'Purchase Type' },
   { id: 'vehicleRegistrationNumberPreference', label: 'Registration # Ref.' },
-]
+];
 
 const vehicleInfoConfigWithYesNo = [
   { id: 'vehicleFirstTransfer', label: 'First Transfer' },
   { id: 'vehicleResidentialProof', label: 'Residential Proof' },
   { id: 'vehicleAdvanceTaxDeduction', label: 'Advance TAX Deduction' },
-]
+];
