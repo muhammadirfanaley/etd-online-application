@@ -88,12 +88,12 @@ class ApplicationForm extends Component {
                 onChange={selectedSlot => this.setState({ selectedSlot })}
                 itemLabel="time_"
                 itemValue="id"
-                className="md-cell md-cell--4-tablet md-cell--6"
+                className="md-cell md-cell--3-tablet md-cell--6"
                 helpOnFocus
                 helpText="Try selecting a value and then selecting the first item in the list."
                 errorText={
                   <span>
-                    A <em>real</em> value is required for this field
+                    A <em>real</em> Slot is required for this field
                   </span>
                 }
               />

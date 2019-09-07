@@ -1,11 +1,11 @@
-const { resolve } = require('path')
+const { resolve } = require('path');
 
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // if the size of resource is bigger than threshold,
 // it will be splitted into additional file
 // rather than bundle to javascript file
-const resourceThreshold = 8192
+const resourceThreshold = 8192;
 
 module.exports = {
   entry: {
@@ -77,4 +77,4 @@ module.exports = {
       },
     ]),
   ],
-}
+};

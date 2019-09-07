@@ -54,12 +54,12 @@ class Home extends Component {
    *
    */
 
-  reserveSlot = async slot => {
-    if (!slot) {
+  reserveSlot = async slotId => {
+    if (!slotId) {
       alert('No Slot Selected');
       return;
     }
-    const { currentSession } = this.state;
+    const { currentSession, timeSlots } = this.state;
 
     if (!currentSession.id) {
       alert('Current Session expired');
@@ -70,7 +70,7 @@ class Home extends Component {
       computerId: currentSession.id,
       chasis: currentSession.veh_chasis_no,
       session_id: currentSession.session_id,
-      timeSlot: Number(slot),
+      timeSlot: Number(slotId),
     };
 
     this.setState({ fetching: true });
@@ -80,7 +80,26 @@ class Home extends Component {
         method: 'post',
         data: payload,
       });
-      alert('Slot Reserved Successfully');
+
+      const slot = timeSlots.find(slot => slot.id === slotId);
+      if (slot) {
+        const [
+          ap_time = currentSession.ap_time,
+          window = currentSession.window,
+        ] = (slot.time_ && slot.time_.replace(')', '').split('(')) || [];
+        this.setState(
+          {
+            currentSession: {
+              ...currentSession,
+              ap_time,
+              window,
+            },
+          },
+          () => {
+            alert('Slot Reserved Successfully');
+          },
+        );
+      }
     } catch (error) {
       alert(error);
     } finally {

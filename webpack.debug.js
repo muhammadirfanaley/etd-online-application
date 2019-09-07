@@ -1,20 +1,20 @@
-const merge = require('webpack-merge')
+const merge = require('webpack-merge');
 
-const devConfig = require('./webpack.dev')
+const devConfig = require('./webpack.dev');
 
 devConfig.module.rules.find(
   rule => rule.loader === 'babel-loader',
-).options.cacheDirectory = false
+).options.cacheDirectory = false;
 
 // delete css and sass loader in dev config
 const cssLoaderIndex = devConfig.module.rules.indexOf(
   rule => rule.test.toString() === /\.css$/i.toString(),
-)
-devConfig.module.rules.splice(cssLoaderIndex, 1)
+);
+devConfig.module.rules.splice(cssLoaderIndex, 1);
 const sassLoaderIndex = devConfig.module.rules.indexOf(
   rule => rule.test.toString() === /\.s(a|c)ss$/i.toString(),
-)
-devConfig.module.rules.splice(sassLoaderIndex, 1)
+);
+devConfig.module.rules.splice(sassLoaderIndex, 1);
 
 module.exports = merge(devConfig, {
   mode: 'development',
@@ -78,4 +78,4 @@ module.exports = merge(devConfig, {
       },
     ],
   },
-})
+});
