@@ -91,10 +91,10 @@ class ApplicationForm extends Component {
                   itemValue="id"
                   className="md-cell md-cell--3-tablet md-cell--6"
                   helpOnFocus
-                  helpText="Try selecting a value and then selecting the first item in the list."
+                  helpText="Select alternate time slot to change appiontment time."
                   errorText={
                     <span>
-                      A <em>real</em> Slot is required for this field
+                       Please select a time slot to change appiontment time
                     </span>
                   }
                 />
