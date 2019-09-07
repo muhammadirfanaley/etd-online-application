@@ -80,35 +80,35 @@ class ApplicationForm extends Component {
               }}
             >
               {currentSession.ap_time && currentSession.window && (
-              <SelectField
-                id="select-field-controlled22"
-                label="Available Time Slots"
-                required
-                value={selectedSlot}
-                menuItems={timeSlots}
-                onChange={selectedSlot => this.setState({ selectedSlot })}
-                itemLabel="time_"
-                itemValue="id"
-                className="md-cell md-cell--3-tablet md-cell--6"
-                helpOnFocus
-                helpText="Try selecting a value and then selecting the first item in the list."
-                errorText={
-                  <span>
-                    A <em>real</em> Slot is required for this field
-                  </span>
-                }
-              />
+                <SelectField
+                  id="select-field-controlled22"
+                  label="Available Time Slots"
+                  required
+                  value={selectedSlot}
+                  menuItems={timeSlots}
+                  onChange={selectedSlot => this.setState({ selectedSlot })}
+                  itemLabel="time_"
+                  itemValue="id"
+                  className="md-cell md-cell--3-tablet md-cell--6"
+                  helpOnFocus
+                  helpText="Try selecting a value and then selecting the first item in the list."
+                  errorText={
+                    <span>
+                      A <em>real</em> Slot is required for this field
+                    </span>
+                  }
+                />
               )}
-              {currentSession.ap_time && currentSession.window &&(
-              <Button
-                flat
-                primary
-                swapTheming
-                onClick={() => reserveSlot(selectedSlot)}
-                disabled={!selectedSlot}
-              >
-                Change Appiontment Time
-              </Button>
+              {currentSession.ap_time && currentSession.window && (
+                <Button
+                  flat
+                  primary
+                  swapTheming
+                  onClick={() => reserveSlot(selectedSlot)}
+                  disabled={!selectedSlot}
+                >
+                  Change Appiontment Time
+                </Button>
               )}
             </div>
             <p style={{ ...infoMessageStyle, flex: '1' }}>
