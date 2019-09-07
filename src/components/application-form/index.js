@@ -79,6 +79,7 @@ class ApplicationForm extends Component {
                 alignItems: 'center',
               }}
             >
+              {currentSession.ap_time && currentSession.window && (
               <SelectField
                 id="select-field-controlled22"
                 label="Available Time Slots"
@@ -97,6 +98,8 @@ class ApplicationForm extends Component {
                   </span>
                 }
               />
+              )}
+              {currentSession.ap_time && currentSession.window &&(
               <Button
                 flat
                 primary
@@ -106,6 +109,7 @@ class ApplicationForm extends Component {
               >
                 Apply
               </Button>
+              )}
             </div>
             <p style={{ ...infoMessageStyle, flex: '1' }}>
               {`Please visit E.T.D Islamabad Office along with original documents.`}{' '}
