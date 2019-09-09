@@ -43,6 +43,10 @@ export const dictionary = {
     'vehicleSeats',
     'vehicleUnLadenWeight',
     'vehicleValue',
+    'representativeCnic',
+    'representativeMobile',
+    'representativeName',
+    'representativeFName',
   ],
 };
 
@@ -90,6 +94,10 @@ export const mapping = {
   ap_time: 'apTime',
   window: 'window',
   time: 'time',
+  rep_cnic: 'representativeCnic',
+  rep_mobile: 'representativeMobile',
+  rep_name: 'representativeName',
+  rep_f_name: 'representativeFName',
 };
 
 /**

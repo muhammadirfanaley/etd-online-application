@@ -465,6 +465,39 @@ class ApplicationForm extends Component {
                 );
               })}
             </ExpansionPanel>
+            {/* Representative Information */}
+            <ExpansionPanel
+              defaultExpanded
+              label={
+                <p className="tab-heading">
+                  OWNER`&#39;`S REPRESENTATIVE <span>{`(PERSON WHO WILL APPEAR AT ETD OFFICE ON BEHALF OF VEHIVLE'S OWNER)`}</span>
+                </p>
+              }
+              footer={null}
+            >
+              {representativeInfoConfig.map((infoConfigGroup, index) => {
+                return (
+                  <div key={index} className="flexbox-row">
+                    {infoConfigGroup.map(infoConfig => {
+                      return (
+                        <LabelControlGroup
+                          key={infoConfig.id}
+                          id={infoConfig.id}
+                          label={infoConfig.label}
+                          value={vehicleRegistrationInfo[infoConfig.id]}
+                          helpText={infoConfig.helpText}
+                          isDropDown={infoConfig.isDropDown || false}
+                          menuItems={infoConfig.menuItems || []}
+                          handleChange={data => {
+                            this.handleOnVehicleChange(data);
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </ExpansionPanel>
           </ExpansionList>
         </div>
       </div>
@@ -729,6 +762,24 @@ const commercialVehicleInfoConfig = [
   ],
 ];
 
+const representativeInfoConfig = [
+  [
+    {
+      id: 'representativeCnic',
+      label: 'CNIC :',
+      helpText: 'i.e: 3740616435939',
+    },
+    {
+      id: 'representativeMobile',
+      label: 'MOBILE :',
+      helpText: 'i.e: 923305463603',
+    },
+  ],
+  [
+    { id: 'representativeName', label: 'NAME :' },
+    { id: 'representativeFName', label: 'F/H/W/O NAME :' },
+  ],
+];
 const taxpayerStatusInfoConfig = [
   [
     {

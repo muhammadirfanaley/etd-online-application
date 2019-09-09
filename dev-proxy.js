@@ -1,6 +1,6 @@
 const proxyConfig = {
   '/etd-online-be': {
-    target: 'http://203.99.188.71:8080',
+    target: 'http://localhost:8080',
     // pathRewrite: {
     //  '^/etd-online-be': '/excise',
     // },
