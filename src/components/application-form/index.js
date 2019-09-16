@@ -21,48 +21,11 @@ import {
 
 import './styles.scss';
 
-const validateCninc = value => {
-  return new RegExp(/\d{5}-\d{7}-\d/).test(value)
-    ? {
-      error: false,
-    }
-    : {
-      message: 'CNIC is invalid [12345-1234567-1]',
-      error: true,
-    };
-};
-
-const validations = {
-  cnicPurchaser: validateCninc,
-  cnic: validateCninc,
-};
-
 class ApplicationForm extends Component {
   state = {
     selectedSlot: null,
-    formErrors: {},
   };
-
-  validateData = (id, value) => {
-    let isValid = true;
-    const { formErrors } = this.state;
-    if (validations[id]) {
-      const { error, message } = validations[id](value);
-      if (error) {
-        formErrors[id] = message || `Validations failed for ${id}`;
-        isValid = false;
-      } else {
-        delete formErrors[id];
-        isValid = true;
-      }
-      this.setState({ formErrors });
-    }
-    return isValid;
-  };
-
   handleOnVehicleChange = ({ id, value }) => {
-    console.log(id, value);
-    this.validateData(id, value);
     const { onVehicleChange } = this.props;
     onVehicleChange && onVehicleChange({ id, value });
   };
@@ -78,7 +41,7 @@ class ApplicationForm extends Component {
       timeSlots,
       reserveSlot,
     } = this.props;
-    const { selectedSlot, formErrors } = this.state;
+    const { selectedSlot } = this.state;
 
     const showIndividualDetails =
       vehicleApplicationInfo.ownerType === 'INDIVIDUAL';
@@ -128,10 +91,10 @@ class ApplicationForm extends Component {
                   itemValue="id"
                   className="md-cell md-cell--3-tablet md-cell--6"
                   helpOnFocus
-                  helpText="Try selecting a value and then selecting the first item in the list."
+                  helpText="Select alternate time slot to change appiontment time."
                   errorText={
                     <span>
-                      A <em>real</em> Slot is required for this field
+                       Please select a time slot to change appiontment time
                     </span>
                   }
                 />
@@ -190,7 +153,6 @@ class ApplicationForm extends Component {
                           key={infoConfig.id}
                           id={infoConfig.id}
                           label={infoConfig.label}
-                          error={formErrors[infoConfig.id]}
                           value={vehicleApplicationInfo[infoConfig.id]}
                           helpText={infoConfig.helpText}
                           isDropDown={infoConfig.isDropDown || false}
@@ -335,7 +297,6 @@ class ApplicationForm extends Component {
                           key={infoConfig.id}
                           id={infoConfig.id}
                           label={infoConfig.label}
-                          error={formErrors[infoConfig.id]}
                           value={vehicleRegistrationInfo[infoConfig.id]}
                           helpText={infoConfig.helpText}
                           isDropDown={infoConfig.isDropDown || false}
@@ -504,6 +465,39 @@ class ApplicationForm extends Component {
                 );
               })}
             </ExpansionPanel>
+            {/* Representative Information */}
+            <ExpansionPanel
+              defaultExpanded
+              label={
+                <p className="tab-heading">
+                  OWNER`&#39;`S REPRESENTATIVE <span>{`(PERSON WHO WILL APPEAR AT ETD OFFICE ON BEHALF OF VEHIVLE'S OWNER)`}</span>
+                </p>
+              }
+              footer={null}
+            >
+              {representativeInfoConfig.map((infoConfigGroup, index) => {
+                return (
+                  <div key={index} className="flexbox-row">
+                    {infoConfigGroup.map(infoConfig => {
+                      return (
+                        <LabelControlGroup
+                          key={infoConfig.id}
+                          id={infoConfig.id}
+                          label={infoConfig.label}
+                          value={vehicleRegistrationInfo[infoConfig.id]}
+                          helpText={infoConfig.helpText}
+                          isDropDown={infoConfig.isDropDown || false}
+                          menuItems={infoConfig.menuItems || []}
+                          handleChange={data => {
+                            this.handleOnVehicleChange(data);
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </ExpansionPanel>
           </ExpansionList>
         </div>
       </div>
@@ -546,15 +540,11 @@ const LabelControlGroup = props => {
           id={props.id || ''}
           label={props.label || ''}
           lineDirection="center"
-          errorText={props.error}
-          maxLength={props.maxLength}
-          error={!!props.error}
           placeholder={props.placeholder || ''}
           className={props.className || ''}
           value={props.value}
           fullWidth
           onChange={value => {
-            console.log(value);
             props.handleChange({ id: props.id, value });
           }}
           helpText={props.helpText}
@@ -575,8 +565,6 @@ LabelControlGroup.propTypes = {
   menuItems: PropTypes.array,
   isDropDown: PropTypes.bool,
   handleChange: PropTypes.func,
-  error: PropTypes.string,
-  maxLength: PropTypes.number,
 };
 
 const DateControlGroup = props => {
@@ -705,7 +693,7 @@ const purchaserInfoConfig = [
     { id: 'ntnPurchaser', label: 'NTN :' },
   ],
   [
-    { id: 'cnicPurchaser', label: 'CNIC:', helpText: 'i.e: 3740616435939' },
+    { id: 'cnicPurchaser', label: 'CNIC :', helpText: 'i.e: 3740616435939' },
     { id: 'passportPurchaser', label: 'PASSPORT :' },
   ],
   [{ id: 'ownerNamePurchaser', label: 'NAME :' }],
@@ -774,6 +762,24 @@ const commercialVehicleInfoConfig = [
   ],
 ];
 
+const representativeInfoConfig = [
+  [
+    {
+      id: 'representativeCnic',
+      label: 'CNIC :',
+      helpText: 'i.e: 3740616435939',
+    },
+    {
+      id: 'representativeMobile',
+      label: 'MOBILE :',
+      helpText: 'i.e: 923305463603',
+    },
+  ],
+  [
+    { id: 'representativeName', label: 'NAME :' },
+    { id: 'representativeFName', label: 'F/H/W/O NAME :' },
+  ],
+];
 const taxpayerStatusInfoConfig = [
   [
     {
