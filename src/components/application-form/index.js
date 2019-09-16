@@ -22,17 +22,19 @@ import {
 import './styles.scss';
 
 const validateCninc = value => {
-  return new RegExp(/\b[0-9]{5}\b-\b[0-9]{7}\b-\b[0-9]{1}\b/).test(value) ? { error: false }
+  return new RegExp(/\d{5}-\d{7}-\d/).test(value)
+    ? {
+      error: false,
+    }
     : {
-      message: 'Valid CNIC format is [37406-1643593-9]',
+      message: 'CNIC is invalid [12345-1234567-1]',
       error: true,
     };
 };
 
 const validations = {
-  cnic: validateCninc,
   cnicPurchaser: validateCninc,
-  representativeCnic: validateCninc,
+  cnic: validateCninc,
 };
 
 class ApplicationForm extends Component {
@@ -44,7 +46,6 @@ class ApplicationForm extends Component {
   validateData = (id, value) => {
     let isValid = true;
     const { formErrors } = this.state;
-    /* debugger */
     if (validations[id]) {
       const { error, message } = validations[id](value);
       if (error) {
@@ -60,7 +61,7 @@ class ApplicationForm extends Component {
   };
 
   handleOnVehicleChange = ({ id, value }) => {
-    /* console.log(id, value); */
+    console.log(id, value);
     this.validateData(id, value);
     const { onVehicleChange } = this.props;
     onVehicleChange && onVehicleChange({ id, value });
@@ -503,39 +504,6 @@ class ApplicationForm extends Component {
                 );
               })}
             </ExpansionPanel>
-            {/* Representative Information */}
-            <ExpansionPanel
-              defaultExpanded
-              label={
-                <p className="tab-heading">
-                  OWNER&#39;S REPRESENTATIVE <span>{`(PERSON WHO WILL APPEAR AT ETD OFFICE ON BEHALF OF VEHIVLE'S OWNER)`}</span>
-                </p>
-              }
-              footer={null}
-            >
-              {representativeInfoConfig.map((infoConfigGroup, index) => {
-                return (
-                  <div key={index} className="flexbox-row">
-                    {infoConfigGroup.map(infoConfig => {
-                      return (
-                        <LabelControlGroup
-                          key={infoConfig.id}
-                          id={infoConfig.id}
-                          label={infoConfig.label}
-                          value={vehicleRegistrationInfo[infoConfig.id]}
-                          helpText={infoConfig.helpText}
-                          isDropDown={infoConfig.isDropDown || false}
-                          menuItems={infoConfig.menuItems || []}
-                          handleChange={data => {
-                            this.handleOnVehicleChange(data);
-                          }}
-                        />
-                      );
-                    })}
-                  </div>
-                );
-              })}
-            </ExpansionPanel>
           </ExpansionList>
         </div>
       </div>
@@ -586,7 +554,7 @@ const LabelControlGroup = props => {
           value={props.value}
           fullWidth
           onChange={value => {
-          /* console.log(value); */
+            console.log(value);
             props.handleChange({ id: props.id, value });
           }}
           helpText={props.helpText}
@@ -667,7 +635,7 @@ const personalInfoConfig = [
     { id: 'ntn', label: 'NTN :' },
   ],
   [
-    { id: 'cnic', label: 'CNIC :', helpText: 'i.e: 37406-1643593-9' },
+    { id: 'cnic', label: 'CNIC :', helpText: 'i.e: 3740616435939' },
     { id: 'passport', label: 'PASSPORT :' },
   ],
   [{ id: 'ownerName', label: 'NAME :' }],
@@ -685,7 +653,7 @@ const personalInfoConfig = [
       label: 'OTHER PHONE :',
       helpText: 'i.e: 0518854974',
       validate: input => {
-        /* console.log('validated', input); */
+        console.log('validated', input);
 
         return true;
       },
@@ -737,7 +705,7 @@ const purchaserInfoConfig = [
     { id: 'ntnPurchaser', label: 'NTN :' },
   ],
   [
-    { id: 'cnicPurchaser', label: 'CNIC:', helpText: 'i.e: 37406-1643593-9' },
+    { id: 'cnicPurchaser', label: 'CNIC:', helpText: 'i.e: 3740616435939' },
     { id: 'passportPurchaser', label: 'PASSPORT :' },
   ],
   [{ id: 'ownerNamePurchaser', label: 'NAME :' }],
@@ -803,22 +771,6 @@ const commercialVehicleInfoConfig = [
   [
     { id: 'vehicleLadenWeight', label: 'LEIDEN WEIGHT (Kg) :' },
     { id: 'vehicleUnLadenWeight', label: 'UNLEIDEN WEIGHT (Kg) :' },
-  ],
-];
-const representativeInfoConfig = [
-  [
-    {
-      id: 'representativeCnic', label: 'CNIC :', helpText: 'i.e: 37406-1643593-9',
-    },
-    {
-      id: 'representativeMobile',
-      label: 'MOBILE :',
-      helpText: 'i.e: 923305463603',
-    },
-  ],
-  [
-    { id: 'representativeName', label: 'NAME :' },
-    { id: 'representativeFName', label: 'F/H/W/O NAME :' },
   ],
 ];
 
