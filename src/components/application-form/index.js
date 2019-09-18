@@ -21,15 +21,49 @@ import {
 
 import './styles.scss';
 
+const validateCninc = value => {
+  return new RegExp(/\b[0-9]{5}\b-\b[0-9]{7}\b-\b[0-9]{1}\b/).test(value) ? { error: false }
+    : {
+      message: 'Valid CNIC format is [37406-1643593-9]',
+      error: true,
+    };
+};
+
+const validations = {
+  cnicPurchaser: validateCninc,
+  cnic: validateCninc,
+  representativeCnic: validateCninc,
+};
+
 class ApplicationForm extends Component {
   state = {
     selectedSlot: null,
+    formErrors: {},
   };
+  validateData = (id, value) => {
+    let isValid = true;
+    const { formErrors } = this.state;
+    if (validations[id]) {
+      const { error, message } = validations[id](value);
+      if (error) {
+        formErrors[id] = message || `Validations failed for ${id}`;
+        isValid = false;
+      } else {
+        delete formErrors[id];
+        isValid = true;
+      }
+      this.setState({ formErrors });
+    }
+    return isValid;
+  };
+
   handleOnVehicleChange = ({ id, value }) => {
+    this.validateData(id, value);
     const { onVehicleChange } = this.props;
     onVehicleChange && onVehicleChange({ id, value });
   };
   handleOnInfoChange = ({ id, value }) => {
+    this.validateData(id, value);
     const { onInfoChange } = this.props;
     onInfoChange && onInfoChange({ id, value });
   };
@@ -41,7 +75,7 @@ class ApplicationForm extends Component {
       timeSlots,
       reserveSlot,
     } = this.props;
-    const { selectedSlot } = this.state;
+    const { selectedSlot, formErrors } = this.state;
 
     const showIndividualDetails =
       vehicleApplicationInfo.ownerType === 'INDIVIDUAL';
@@ -153,6 +187,7 @@ class ApplicationForm extends Component {
                           key={infoConfig.id}
                           id={infoConfig.id}
                           label={infoConfig.label}
+                          error={formErrors[infoConfig.id]}
                           value={vehicleApplicationInfo[infoConfig.id]}
                           helpText={infoConfig.helpText}
                           isDropDown={infoConfig.isDropDown || false}
@@ -297,6 +332,7 @@ class ApplicationForm extends Component {
                           key={infoConfig.id}
                           id={infoConfig.id}
                           label={infoConfig.label}
+                          error={formErrors[infoConfig.id]}
                           value={vehicleRegistrationInfo[infoConfig.id]}
                           helpText={infoConfig.helpText}
                           isDropDown={infoConfig.isDropDown || false}
@@ -470,7 +506,7 @@ class ApplicationForm extends Component {
               defaultExpanded
               label={
                 <p className="tab-heading">
-                  OWNER`&#39;`S REPRESENTATIVE <span>{`(PERSON WHO WILL APPEAR AT ETD OFFICE ON BEHALF OF VEHIVLE'S OWNER)`}</span>
+                  OWNER&#39;S REPRESENTATIVE <span>{`(PERSON WHO WILL APPEAR AT ETD OFFICE ON BEHALF OF VEHIVLE'S OWNER)`}</span>
                 </p>
               }
               footer={null}
@@ -484,6 +520,7 @@ class ApplicationForm extends Component {
                           key={infoConfig.id}
                           id={infoConfig.id}
                           label={infoConfig.label}
+                          error={formErrors[infoConfig.id]}
                           value={vehicleRegistrationInfo[infoConfig.id]}
                           helpText={infoConfig.helpText}
                           isDropDown={infoConfig.isDropDown || false}
@@ -540,6 +577,9 @@ const LabelControlGroup = props => {
           id={props.id || ''}
           label={props.label || ''}
           lineDirection="center"
+          errorText={props.error}
+          maxLength={props.maxLength}
+          error={!!props.error}
           placeholder={props.placeholder || ''}
           className={props.className || ''}
           value={props.value}
@@ -565,6 +605,8 @@ LabelControlGroup.propTypes = {
   menuItems: PropTypes.array,
   isDropDown: PropTypes.bool,
   handleChange: PropTypes.func,
+  error: PropTypes.string,
+  maxLength: PropTypes.number,
 };
 
 const DateControlGroup = props => {
@@ -623,7 +665,7 @@ const personalInfoConfig = [
     { id: 'ntn', label: 'NTN :' },
   ],
   [
-    { id: 'cnic', label: 'CNIC :', helpText: 'i.e: 3740616435939' },
+    { id: 'cnic', label: 'CNIC :', helpText: 'i.e: 37406-1643593-9' },
     { id: 'passport', label: 'PASSPORT :' },
   ],
   [{ id: 'ownerName', label: 'NAME :' }],
@@ -693,7 +735,7 @@ const purchaserInfoConfig = [
     { id: 'ntnPurchaser', label: 'NTN :' },
   ],
   [
-    { id: 'cnicPurchaser', label: 'CNIC :', helpText: 'i.e: 3740616435939' },
+    { id: 'cnicPurchaser', label: 'CNIC :', helpText: 'i.e: 37406-1643593-9' },
     { id: 'passportPurchaser', label: 'PASSPORT :' },
   ],
   [{ id: 'ownerNamePurchaser', label: 'NAME :' }],
@@ -767,7 +809,7 @@ const representativeInfoConfig = [
     {
       id: 'representativeCnic',
       label: 'CNIC :',
-      helpText: 'i.e: 3740616435939',
+      helpText: 'i.e: 37406-1643593-9',
     },
     {
       id: 'representativeMobile',
